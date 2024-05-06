@@ -3,6 +3,7 @@ from tkinter import filedialog
 from tkinter import messagebox
 import cv2
 import numpy as np
+import base64
 
 def numtbin(data):
     return bin(data)[2:].zfill(8)
@@ -14,7 +15,8 @@ def texttbin(data):
 def encode():
     try:
         sec_text = entry0.get(1.0, 'end-1c')
-
+        # print(base64.b64encode(sec_text))
+        sec_text = base64.b64encode(sec_text.encode()).decode() #comment this to decode plainText
         bintext = ''.join(bin(ord(i))[2:].zfill(8) for i in sec_text)
         bintext += '0101111001011110010111100101111001011110'
         imgpath = path.get()
@@ -45,7 +47,8 @@ def encode():
                     if dat_place >= bin_dat_length:
                         break
         return pix
-    except:
+    except Exception as e:
+        print(e)
         y = messagebox.showwarning('Try Again !!!', 'Invalid Operation')
         return y
 
